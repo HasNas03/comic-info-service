@@ -1,11 +1,14 @@
 package io.hasan.comicinfoservice;
 
 import io.hasan.comicinfoservice.models.Rating;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/comics")
@@ -30,12 +33,14 @@ public class ComicController {
     }
 
     // webclient test
-    @RequestMapping(method= RequestMethod.GET, value="/webclienttest")
-    public Rating getWebClientResponse(){
-        Rating webRating = webClient.get()
-                                    .uri("http://localhost:8083/ratings/bbanner")
+    @RequestMapping(method= RequestMethod.GET, value="/webClient/{userId}")
+    public List<Rating> getWebClientResponse(@PathVariable("userId") String userId){
+        List<Rating> webRating = webClient.get()
+                                    .uri("http://localhost:8083/ratings/"+userId)
                                     .retrieve()
-                                    .bodyToMono(Rating.class)
+                                    .bodyToFlux(new ParameterizedTypeReference<Rating>() {})
+                                    .collectList()
+                                    // .bodyToMono() // for single items
                                     .block();
         return webRating;
     }
