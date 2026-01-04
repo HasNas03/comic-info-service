@@ -1,5 +1,6 @@
 package io.hasan.comicinfoservice;
 
+import io.hasan.comicinfoservice.models.Comic;
 import io.hasan.comicinfoservice.models.Rating;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.bind.annotation.PathVariable;

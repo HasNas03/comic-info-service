@@ -1,4 +1,4 @@
-package io.hasan.comicinfoservice;
+package io.hasan.comicinfoservice.models;
 
 public class Comic {
 

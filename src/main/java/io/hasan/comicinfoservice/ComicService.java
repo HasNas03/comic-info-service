@@ -1,5 +1,6 @@
 package io.hasan.comicinfoservice;
 
+import io.hasan.comicinfoservice.models.Comic;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;

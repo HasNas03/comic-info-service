@@ -9,6 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class ComicInfoServiceApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(ComicInfoServiceApplication.class, args);
     }
 
