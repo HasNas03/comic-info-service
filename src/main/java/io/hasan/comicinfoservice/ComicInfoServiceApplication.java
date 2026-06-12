@@ -12,10 +12,4 @@ public class ComicInfoServiceApplication {
 
         SpringApplication.run(ComicInfoServiceApplication.class, args);
     }
-
-    // webclient test, configure web client as a spring bean
-    @Bean
-    public WebClient webClient(){
-        return WebClient.builder().build();
-    }
 }
