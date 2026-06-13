@@ -12,35 +12,32 @@
 
 - The project is also a gateway for me to learn and practice:
     - backend development (Java & Spring) best practices
-    - developing REST APIs
-    - connecting to external APIs
+    - internal/external REST APIs
     - cross-microservice integration/authentication
-    - testing and security
-    - external database integration
-    - Cloud integration/hosting
+    - external database and cloud integration
 
 - Technologies
-    - Current technologies: Java, Spring (Boot, Web), Netflix Eureka, Maven, Git
-    - Future technologies: (SQL/MongoDB), Docker, AWS, Spring Security
+    - Current: Java, Spring (Boot, Web), Netflix Eureka, Maven, Git
+    - Future : (SQL/MongoDB), Docker, AWS, Spring Security, external APIs
 ---
 
 ---
 **Comic Info Microservice**
 
 - This repository stores metadata for major comic runs/events
-- The Comic Info API provides REST endpoints for the Comic Catalog Microservice to pull from a list of popular comics
+- The Comic Info API provides REST endpoints for the Comic Catalog Microservice to pull comic data from
 
 
 - Architecture (suggestions/improvements are welcome/encouraged!):
-    - **Comic (Entity)**
-        - Comic(String comicId, String comicName, String comicDesc)
-        - JPA entity representing a stored comic record, including the comic Id (userId), the comic name (comicName), and the comic description (comicDesc)
+    - **Comic (Model)**
+        - Comic(UUID comicId, String comicTitle, String comicIssue, String comicStartYear, String comicDesc)
 
     - **ComicController**
-        - REST controller for the Info microservice (/comics)
+        - REST controller for the Comic Info Microservice (/comics)
+        - handles basic HTTP GET/POST/PUT/DELETE methods
 
     - **ComicService**
-        - Service layer containing the business logic
+        - Service layer containing the business logic functions to process HTTP methods
 
     - **ComicRepository**
-        - TBD
+        - TBD (an in-memory data store is currently used while JPA is not implemented)
