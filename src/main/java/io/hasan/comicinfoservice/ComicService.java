@@ -32,7 +32,7 @@ public class ComicService {
     // add a new comic
     public Comic addComic(Comic comic) {
         UUID id = UUID.randomUUID();
-        comic.setId(id);
+        comic.setComicId(id);
         comicsDB.put(id, comic);
         return comic;
     }
@@ -41,6 +41,7 @@ public class ComicService {
     public Comic updateComic(UUID id, Comic comicUpdate) {
         Comic comic = getComic(id);
         comic.setComicTitle(comicUpdate.getComicTitle());
+        comic.setComicIssue(comicUpdate.getComicIssue());
         comic.setComicStartYear(comicUpdate.getComicStartYear());
         comic.setComicDesc(comicUpdate.getComicDesc());
         return comic;
@@ -51,7 +52,10 @@ public class ComicService {
         getComic(id);
         comicsDB.remove(id);
     }
-//    // temp data of comics
+
+
+
+// temp data of comics
 //    List<Comic> comics = Arrays.asList(
 //            new Comic("1", "Civil War", "Superheroes divide into two factions over government registration"),
 //            new Comic("2", "Annihilation", "A cosmic threat led by Annihilus from the Negative Zone devastates the Marvel Universe"),

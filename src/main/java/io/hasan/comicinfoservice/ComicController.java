@@ -1,9 +1,7 @@
 package io.hasan.comicinfoservice;
 
 import io.hasan.comicinfoservice.models.Comic;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.reactive.function.client.WebClient;
 import java.util.List;
 import java.util.UUID;
 
