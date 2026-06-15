@@ -31,6 +31,7 @@ public class ComicService {
 
     // add a new comic
     public Comic addComic(Comic comic) {
+        validateComic(comic);
         UUID id = UUID.randomUUID();
         comic.setComicId(id);
         comicsDB.put(id, comic);
@@ -39,6 +40,7 @@ public class ComicService {
 
     // edit an existing comic
     public Comic updateComic(UUID id, Comic comicUpdate) {
+        validateComic(comicUpdate);
         Comic comic = getComic(id);
         comic.setComicTitle(comicUpdate.getComicTitle());
         comic.setComicIssue(comicUpdate.getComicIssue());
@@ -53,7 +55,12 @@ public class ComicService {
         comicsDB.remove(id);
     }
 
-
+    // validation helper
+    private void validateComic(Comic comic) {
+        if (comic.getComicTitle() == null || comic.getComicTitle().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "title is required");
+        }
+    }
 
 // temp data of comics
 //    List<Comic> comics = Arrays.asList(

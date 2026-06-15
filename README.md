@@ -1,4 +1,4 @@
-**Comic Catalog Project**
+## Comic Catalog Project
 
 - The Comic Catalog is a personal-use project aiming to develop a custom application for storing comic book reviews and reading progress
 
@@ -22,22 +22,27 @@
 ---
 
 ---
-**Comic Info Microservice**
+## Comic Info Microservice
 
 - This repository stores metadata for major comic runs/events
 - The Comic Info API provides REST endpoints for the Comic Catalog Microservice to pull comic data from
+- It temporarily uses an in-memory Map<UUID, Comic> that is recreated every time the app starts
 
 
-- Architecture (suggestions/improvements are welcome/encouraged!):
-    - **Comic (Model)**
-        - Comic(UUID comicId, String comicTitle, String comicIssue, String comicStartYear, String comicDesc)
+### Model
 
-    - **ComicController**
-        - REST controller for the Comic Info Microservice (/comics)
-        - handles basic HTTP GET/POST/PUT/DELETE methods
+`Comic`
+- `UUID id`
+- `String title`
+- `String publisher`
+- `Integer startYear`
+- `String description`
 
-    - **ComicService**
-        - Service layer containing the business logic functions to process HTTP methods
-
-    - **ComicRepository**
-        - TBD (an in-memory data store is currently used while JPA is not implemented)
+## Endpoints
+```text
+GET    /comics
+GET    /comics/{id}
+POST   /comics
+PUT    /comics/{id}
+DELETE /comics/{id}
+```
