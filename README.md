@@ -41,8 +41,8 @@
 ## Endpoints
 ```text
 GET    /comics
-GET    /comics/{id}
+GET    /comics/{comicId}
 POST   /comics
-PUT    /comics/{id}
-DELETE /comics/{id}
+PUT    /comics/{comicId}
+DELETE /comics/{comicId}
 ```
