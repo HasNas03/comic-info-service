@@ -11,6 +11,7 @@ public class Comic {
     private String comicDesc;
 
     // constructor
+    public Comic() {}
     public Comic(String comicTitle, String comicIssue, String comicStartYear, String comicDesc) {
         this.comicTitle = comicTitle;
         this.comicIssue = comicIssue;
