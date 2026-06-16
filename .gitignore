@@ -36,3 +36,4 @@ build/
 .DS_Store
 
 ### tests ###
+src/test/java/io/hasan/comicinfoservice/ComicServiceTests.java
