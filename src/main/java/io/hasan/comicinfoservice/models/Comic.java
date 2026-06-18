@@ -1,9 +1,17 @@
 package io.hasan.comicinfoservice.models;
 import java.util.UUID;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
+// makes the class a database entity, so Hibernate knows to
+// create a table for this class and store objects of it in the database
+@Entity
 public class Comic {
 
     // attributes
+    @Id // comicsId is primary key for table
+    @GeneratedValue // generate this ID automatically when a new entity is saved (no need for us to generate UUID now)
     private UUID comicId;
     private String comicTitle;
     private String comicIssue;

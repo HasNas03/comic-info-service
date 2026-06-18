@@ -5,37 +5,39 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ComicService {
 
-    // 1. create temporary comic database
-    // future variable for Repository bean that will handle db CRUD "private final ComicRepository comicRepository;"
-    private final Map<UUID, Comic> comicsDB = new LinkedHashMap<>();
+    // 1. create Repository bean that will handle db CRUD "private final ComicRepository comicRepository;"
+    private final ComicRepository comicRepository;
 
     // 2. constructor
-    public ComicService(){}
+    public ComicService(ComicRepository comicRepository) {
+        this.comicRepository = comicRepository;
+    }
 
     // 3. Declare service methods
 
     // get list of all comics
     public List<Comic> getAllComics() {
-        return new ArrayList<>(comicsDB.values());}
+        return comicRepository.findAll();}
 
     // get a specific comic by id
     public Comic getComic(UUID id) {
-        Comic comic = comicsDB.get(id);
-        if (comic == null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comic not found");}
-        return comic;}
+        return comicRepository
+                .findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Comic not found"));}
 
     // add a new comic
     public Comic addComic(Comic comic) {
         validateComic(comic);
-        UUID id = UUID.randomUUID();
-        comic.setComicId(id);
-        comicsDB.put(id, comic);
-        return comic;
+        // set any previous id to null
+        comic.setComicId(null);
+        // save comic and Hibernate makes id
+        return comicRepository.save(comic);
     }
 
     // edit an existing comic
@@ -46,13 +48,12 @@ public class ComicService {
         comic.setComicIssue(comicUpdate.getComicIssue());
         comic.setComicStartYear(comicUpdate.getComicStartYear());
         comic.setComicDesc(comicUpdate.getComicDesc());
-        return comic;
+        return comicRepository.save(comic);
     }
 
     // delete an existing comic
     public void deleteComic(UUID id) {
-        getComic(id);
-        comicsDB.remove(id);
+        comicRepository.delete(getComic(id));
     }
 
     // validation helper
@@ -61,16 +62,4 @@ public class ComicService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "title is required");
         }
     }
-
-// temp data of comics
-//    List<Comic> comics = Arrays.asList(
-//            new Comic("1", "Civil War", "Superheroes divide into two factions over government registration"),
-//            new Comic("2", "Annihilation", "A cosmic threat led by Annihilus from the Negative Zone devastates the Marvel Universe"),
-//            new Comic("3", "Secret Invasion", "The shapeshifting Skrulls infiltrate Earth"),
-//            new Comic("4", "Dark Reign", "Green Goblin takes control of national security"),
-//            new Comic("5", "Siege", "Osborn's regime falls when he attacks Asgard"),
-//            new Comic("6", "AVX", "The Avengers and X-Men clash over what to do with the returning Phoenix Force"),
-//            new Comic("7", "Secret Wars", "The multiverse collapses and Doctor Doom creates Battleworld from its remnants")
-//    );
-
 }
