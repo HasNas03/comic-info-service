@@ -37,3 +37,6 @@ build/
 
 ### tests ###
 src/test/java/io/hasan/comicinfoservice/ComicServiceTests.java
+
+### local uploads ###
+uploads/

@@ -17,6 +17,7 @@ public class Comic {
     private String comicIssue;
     private String comicStartYear;
     private String comicDesc;
+    private String comicImagePath;
 
     // constructor
     public Comic() {}
@@ -25,6 +26,7 @@ public class Comic {
         this.comicIssue = comicIssue;
         this.comicStartYear = comicStartYear;
         this.comicDesc = comicDesc;
+        // ImagePath not present as it's not passed when creating a Comic, moreso a backend-only field
     }
 
     // getters and setters
@@ -38,4 +40,6 @@ public class Comic {
     public void setComicStartYear(String comicStartYear) {this.comicStartYear = comicStartYear;}
     public String getComicDesc() {return comicDesc;}
     public void setComicDesc(String comicDesc) {this.comicDesc = comicDesc;}
+    public String getComicImagePath() {return comicImagePath;}
+    public void setComicImagePath(String comicImagePath) {this.comicImagePath = comicImagePath;}
 }
