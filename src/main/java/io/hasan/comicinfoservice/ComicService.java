@@ -13,10 +13,13 @@ public class ComicService {
 
     // 1. create Repository bean that will handle db CRUD "private final ComicRepository comicRepository;"
     private final ComicRepository comicRepository;
+    // call comciImageService so delete operation has reference
+    private final ComicImageService comicImageService;
 
     // 2. constructor
-    public ComicService(ComicRepository comicRepository) {
+    public ComicService(ComicRepository comicRepository, ComicImageService comicImageService) {
         this.comicRepository = comicRepository;
+        this.comicImageService = comicImageService;
     }
 
     // 3. Declare service methods
@@ -53,6 +56,7 @@ public class ComicService {
 
     // delete an existing comic
     public void deleteComic(UUID id) {
+        comicImageService.deleteImage(id);
         comicRepository.delete(getComic(id));
     }
 
