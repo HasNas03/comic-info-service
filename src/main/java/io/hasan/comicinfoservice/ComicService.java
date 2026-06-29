@@ -11,6 +11,9 @@ import java.util.UUID;
 @Service
 public class ComicService {
 
+    public static final String STATUS_LIBRARY = "LIBRARY";
+    public static final String STATUS_WANTED = "WANTED";
+
     // 1. create Repository bean that will handle db CRUD "private final ComicRepository comicRepository;"
     private final ComicRepository comicRepository;
     // call comciImageService so delete operation has reference
@@ -37,6 +40,7 @@ public class ComicService {
     // add a new comic
     public Comic addComic(Comic comic) {
         validateComic(comic);
+        comic.setComicStatus(normalizeStatus(comic.getComicStatus()));
         // set any previous id to null
         comic.setComicId(null);
         // save comic and Hibernate makes id
@@ -51,6 +55,11 @@ public class ComicService {
         comic.setComicIssue(comicUpdate.getComicIssue());
         comic.setComicStartYear(comicUpdate.getComicStartYear());
         comic.setComicDesc(comicUpdate.getComicDesc());
+        if (comicUpdate.getComicStatus() != null) {
+            comic.setComicStatus(normalizeStatus(comicUpdate.getComicStatus()));
+        } else if (comic.getComicStatus() == null) {
+            comic.setComicStatus(STATUS_LIBRARY);
+        }
         return comicRepository.save(comic);
     }
 
@@ -65,5 +74,18 @@ public class ComicService {
         if (comic.getComicTitle() == null || comic.getComicTitle().isBlank()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "title is required");
         }
+        normalizeStatus(comic.getComicStatus());
+    }
+
+    private String normalizeStatus(String status) {
+        if (status == null || status.isBlank()) {
+            return STATUS_LIBRARY;
+        }
+
+        String normalizedStatus = status.trim().toUpperCase();
+        if (!STATUS_LIBRARY.equals(normalizedStatus) && !STATUS_WANTED.equals(normalizedStatus)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "comicStatus must be LIBRARY or WANTED");
+        }
+        return normalizedStatus;
     }
 }
